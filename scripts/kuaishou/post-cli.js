@@ -37,7 +37,7 @@ const SCHEMA = {
       type: "number",
       default: 10,
       transform: (v) => Number(v),
-      desc: "作品数量, 0-10000; 0 表示只取博主信息和互动数据",
+      desc: "作品数量, 0-10000；包月 Token 实际最多 50；0 表示只取博主信息和互动数据",
     },
   },
   positionalKey: "url",
@@ -61,6 +61,7 @@ function printHelp() {
       "  - 这是博主主页或数字 user_id，不是视频链接，也不是裸的 3x 视频 id\n" +
       "  - 不传 --sort 时是 1（最热）。要最近发布请显式传 --sort 0\n" +
       "  - --limit 0 只返回博主信息和互动数据\n" +
+      "  - 数量 0-10000；包月 Token 实际最多 50，超限返回 PLAN_LIMIT\n" +
       "  - 排序和数量若不在允许范围内，命令会直接失败，不会改成默认值后继续请求\n",
   );
 }

@@ -1,6 +1,6 @@
 # 🎯 快手热门视频检索
 
-> **一句话价值主张**：一款专业的快手数据分析工具，通过挖掘爆款视频、监控竞品动态、筛选高价值KOL，帮助你实现快手账号的快速增长与精准营销。
+> **一句话价值主张**：「快手热门视频检索」按关键词实时搜快手公开热门视频并返回互动与趋势数据，助力发现热门趋势与创作灵感；同步覆盖爆款挖掘、竞品监控与评论洞察，助力账号增长与精准营销。
 
 ## 1. 技能概述
 
@@ -9,7 +9,7 @@
 **🔥核心优势**
 
 > - 安全: 无需登录你的快手账号，不担心风控风险 / 封号问题
-> - 强大: 一次可获取最多1W条数据，技能内置批量操作，使用简单方便
+> - 强大: 按量 Token 单次最多 10000 条；包月 Token 搜索最多 30、作品最多 50、评论最多 60
 > - 全面: 各功能出参数据全面，可见及有价值数据都会返回
 > - 灵活: 支持排序、时间和时长筛选，结果为 JSON
 > - 轻量: 无需部署服务，Node.js 一键运行
@@ -31,7 +31,7 @@
 
 ## 2. 🚀 快速使用
 
-> **Note:** 请先联系开发者微信 <13395823479> 申请 API TOKEN，或访问[快手热门视频检索技能](https://www.guaikei.com)开通TOKEN，配置环境变量 `GUAIKEI_API_TOKEN` 后才能正常运行。
+> **Note:** 请先访问[快手热门视频检索](https://www.guaikei.com)开通 TOKEN，配置环境变量 `GUAIKEI_API_TOKEN` 后才能正常运行。
 
 ### 2.1 快手关键词搜索
 
@@ -48,10 +48,12 @@ node scripts/kuaishou/post-cli.js --url "https://www.kuaishou.com/profile/3xxx" 
 ### 2.3 快手视频评论分析
 
 ```bash
-node scripts/kuaishou/comment-cli.js --url "https://www.kuaishou.com/short-video/3xxx" --limit 100
+node scripts/kuaishou/comment-cli.js --url "https://www.kuaishou.com/short-video/3xxx" --limit 40
 ```
 
 **💡 详细选项说明**， 可参阅 [完整选项说明](references/options.md)
+
+> **套餐双上限**：技能硬上限 10000（按量）。包月超限返回 `PLAN_LIMIT`（退出码 1），不要当网络错误同参重试；可降 `--limit` 或到官网升级，须用户同意后再跑。
 
 ## 3. 📌 使用场景
 
@@ -65,6 +67,7 @@ node scripts/kuaishou/comment-cli.js --url "https://www.kuaishou.com/short-video
 
 - 仅抓取快手公开数据，不支持私密 / 隐藏内容
 - 需要配置 GUAIKEI_API_TOKEN 才能正常运行
+- 按量 Token 单次最多 10000；**包月**搜索 ≤30、作品 ≤50、评论 ≤60，超限为 `PLAN_LIMIT`
 - 数据仅限个人 / 团队内部使用，禁止违规分发
 - 本工具无需登录快手账号，不涉及用户隐私数据的获取
 
@@ -88,5 +91,4 @@ node scripts/kuaishou/comment-cli.js --url "https://www.kuaishou.com/short-video
 
 ## 6. 📞 帮助与支持
 
-- 联系微信 13395823479（备注快手技能）开通TOKEN或获得技能使用支持；
-- 或通过 [快手热门视频检索技能](https://www.guaikei.com) 自助开通TOKEN或查阅使用帮助。
+- 通过 [快手热门视频检索](https://www.guaikei.com) 自助开通 TOKEN 或查阅使用帮助。

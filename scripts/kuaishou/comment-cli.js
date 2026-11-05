@@ -29,7 +29,7 @@ const SCHEMA = {
       type: "number",
       default: 10,
       transform: (v) => Number(v),
-      desc: "评论数量, 1-10000",
+      desc: "评论数量, 1-10000；包月 Token 实际最多 60",
     },
   },
   positionalKey: "url",
@@ -44,12 +44,13 @@ function printHelp() {
       SCHEMA,
       "node scripts/kuaishou/comment-cli.js <视频链接或视频id> [选项]",
       [
-        'node scripts/kuaishou/comment-cli.js --url "https://www.kuaishou.com/short-video/3xabc" --limit 100',
-        "node scripts/kuaishou/comment-cli.js --url 3xabc --limit 100",
+        'node scripts/kuaishou/comment-cli.js --url "https://www.kuaishou.com/short-video/3xabc" --limit 40',
+        "node scripts/kuaishou/comment-cli.js --url 3xabc --limit 40",
       ],
     ) +
       "\n\n注意:\n" +
       "  - 这是视频链接或 3x 视频 id，不是博主主页，也不是纯数字 user_id\n" +
+      "  - 数量 1-10000；包月 Token 实际最多 60，超限返回 PLAN_LIMIT\n" +
       "  - 数量若不在 1-10000，命令会直接失败，不会改成默认值后继续请求\n",
   );
 }

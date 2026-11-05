@@ -9,6 +9,7 @@ const {
   TimeoutError,
   AuthError,
 } = require("./errors");
+const { mapBackendApiError } = require("./backendCodes");
 const utils = require("./utils");
 const { skillName } = require("./name");
 
@@ -55,10 +56,9 @@ async function request(options, data = null) {
               } else {
                 finish(
                   reject,
-                  new ApiError(
-                    jsonBody.errcode.toString(),
+                  mapBackendApiError(
+                    jsonBody.errcode,
                     jsonBody.errmsg || "请求失败",
-                    jsonBody.errcode >= 10,
                   ),
                 );
               }
