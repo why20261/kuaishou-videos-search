@@ -31,7 +31,7 @@
 
 ## 2. 🚀 快速使用
 
-> **Note:** 请先访问[快手热门视频检索](https://www.guaikei.com)开通 TOKEN，配置环境变量 `GUAIKEI_API_TOKEN` 后才能正常运行。
+> **Note:** 请先访问[快手热门视频检索官网](https://www.guaikei.com)开通 TOKEN，配置环境变量 `GUAIKEI_API_TOKEN` 后才能正常运行。
 
 ### 2.1 快手关键词搜索
 
@@ -91,4 +91,4 @@ node scripts/kuaishou/comment-cli.js --url "https://www.kuaishou.com/short-video
 
 ## 6. 📞 帮助与支持
 
-- 通过 [快手热门视频检索](https://www.guaikei.com) 自助开通 TOKEN 或查阅使用帮助。
+- 通过 [快手热门视频检索官网](https://www.guaikei.com) 自助开通 TOKEN 或查阅使用帮助。

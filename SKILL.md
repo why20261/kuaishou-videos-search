@@ -2,7 +2,7 @@
 name: kuaishou-videos-search
 description: "快手热门视频搜索工具，支持按关键词搜索获取最多点赞热门内容数据，基于快手的实时数据返回特定关键词的热门视频数据，助力创作者、品牌方和MCN机构发现热门趋势、获取创作灵感。支持三大能力：(1) 关键词搜索视频，可按点赞数、发布时间、视频时长筛选排序；(2) 达人作品抓取，按主页链接获取公开作品列表；(3) 视频评论分析，按视频链接获取评论内容与互动数据。"
 license: MIT
-version: 1.1.1
+version: 1.1.2
 display_name: 🎯快手热门视频检索
 display_name_en: KuaiShou Hot Videos Search
 description_zh: 快手热门视频搜索工具，支持按关键词搜索获取最多点赞热门内容数据，基于快手的实时数据返回特定关键词的热门视频数据，助力创作者、品牌方和MCN机构发现热门趋势、获取创作灵感。
@@ -23,7 +23,7 @@ metadata:
     bins: ["node"]
     env: ["GUAIKEI_API_TOKEN"]
   env_desc:
-    GUAIKEI_API_TOKEN: "快手数据 API 访问令牌。未配置时无法调用接口；可通过 https://www.guaikei.com 开通，或联系开发者（微信 13395823479，备注：快手技能）。"
+    GUAIKEI_API_TOKEN: "快手数据 API 访问令牌。未配置时无法调用接口；可通过 https://www.guaikei.com 开通。"
   keywords:
     - "快手"
     - "Kuaishou"
@@ -39,7 +39,6 @@ metadata:
     - "数据分析"
     - "内容创作"
     - "商业运营"
-    - "办公效率"
   tags:
     - "快手"
     - "Kuaishou"
@@ -88,6 +87,7 @@ metadata:
     - "这个快手博主最近 20 条作品 → node scripts/kuaishou/post-cli.js --url \"https://www.kuaishou.com/profile/3xabc\" --sort 0 --limit 20"
     - "这个快手博主多少粉丝 → node scripts/kuaishou/post-cli.js --url 123456 --limit 0"
 ---
+
 # 🎯 快手热门视频检索
 
 「快手热门视频检索」面向热门趋势与创作灵感：按关键词实时搜索快手公开热门视频，返回内容信息、互动量与趋势/评论数据，助力创作者、品牌方和 MCN 发现爆款方向；覆盖**关键词搜索排序**、**达人作品抓取**、**视频评论分析**，不登录、不发布，结果为结构化 JSON。
@@ -103,7 +103,7 @@ metadata:
 
 ## 0. 每次按这个顺序执行
 
-1. 确认环境变量 `GUAIKEI_API_TOKEN` 已配置。没有配置时直接告诉用户去 [快手热门视频检索官网](https://www.guaikei.com) 开通，不要先跑一遍试探。
+1. 确认环境变量 `GUAIKEI_API_TOKEN` 已配置。没有配置时直接告诉用户去 [快手热门视频检索](https://www.guaikei.com) 开通，不要先跑一遍试探。
 2. 在本技能根目录执行 `node scripts/kuaishou/<命令>.js`。
 3. stderr 出现「处理中」表示任务还在跑。等进程自己退出，再读 stdout 的最后一份 JSON。不要把 stderr 或整份 JSON 念给用户。
 4. 按「4. 读结果」的退出码表决定：改参数再试、告诉用户，或停止。
@@ -200,7 +200,7 @@ metadata:
   "message": "搜索任务完成",
   "timestamp": "2026/10/26 16:20:00",
   "request": { "command": "search", "keyword": "具身智能", "sort": 2, "time": 0, "duration": 0, "limit": 20 },
-  "metadata": { "skill_version": "1.1.1", "runtime_version": "22.22.2", "execution_time": 8421 },
+  "metadata": { "skill_version": "1.1.2", "runtime_version": "22.22.2", "execution_time": 8421 },
   "results": [{ "id": "3xabc", "caption": "..." }]
 }
 ```
@@ -219,6 +219,9 @@ metadata:
 | 1 | `INVALID_URL` | 按路由换命令，或向用户确认这是视频还是主页 |
 | 3 | `AUTH_REQUIRED` / `AUTH_ERROR` | 停止重试，让用户配置 `GUAIKEI_API_TOKEN` |
 | 1 | `PLAN_LIMIT` | 套餐单次条数超限（常见于包月 Token）。**禁止同参重试**。转述 `message`；可建议降低 `--limit`（搜索≤30，作品≤50，评论≤60）或到官网升级按量；**须用户同意后再跑**。禁止擅自加大 limit |
+| 1 | `INSUFFICIENT_BALANCE` | 余额不足（常为后端 15）。**禁止同参重试**。引导官网充值 |
+| 1 | `RATE_LIMITED` | 短时间提交过多（常为后端 2）。**禁止立即重试**。稍后经用户同意再跑 |
+| 1 | `DAILY_LIMIT` | 今日消费已达每日上限（后端 18）。**禁止同参重试**。明日再试或到官网调整限额 |
 | 1 | `TIMEOUT` | 任务仍在处理。大约 20 分钟内用同一组参数重跑会复用已有任务。宿主提前结束进程时不要立刻连打 |
 | 1 | `NETWORK_ERROR` / `HTTP_5xx` / `HTTP_429` | 命令内部已经重试过。退出后再失败就告诉用户稍后再试，不要立刻连打 |
 | 1 | 十进制数字，例如 `"12"` | 把 `message` 原样转告。不要把 `"1"` 当成业务失败，那是处理中，命令会自己等 |
